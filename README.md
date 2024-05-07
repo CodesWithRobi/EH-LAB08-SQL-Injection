@@ -35,31 +35,35 @@ Select Multidae from the menu listed as shown above. You will get the page as di
 
 Click on the menu Login/Register and register for an account
 
-![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/fc0f993a-e280-468b-a414-246758c8236d)
-
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/f6fb65df-581e-4d8a-ba5f-025e070edac4)
 
 Click on the link “Please register here”
 
-
-
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/fc0f993a-e280-468b-a414-246758c8236d)
 
 Click on “Create Account” to display the following page:
+
 
 The login structure we will use in our examples is straightforward. It contains two input fields (username and password), which are both vulnerable. The back-end content creates a query to approve the username and secret key given by the client. Here is an outline of the page rationale:
 
 ($query = “SELECT * FROM users WHERE username=’$_POST[username]’ AND password=’$_POST[password]’“;).
  For the username put “ganesh” or “anything” and for the password put (anything’ or ‘1’=’1) or (admin’ or ‘1’=’1) then try to log in, and you’ll be presented with an admin login page.
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/7bc82783-2b0a-4f2b-b50a-3ea12da1a9e3)
+
 
 Click “Login”. The logged in page will show as below:
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/a710766e-b13f-4d0e-9ba3-9ea2e5a009ef)
 
-##Bypassing login field
 
-The username field is vulnerable. Put (ganesh’ #) or (ganesh’--) in the username field and hit “Enter” to log in. We use “#” or “--” to comment everything in the query sentence that comes after the username filed telling the database to disregard the password field: (SELECT * FROM users WHERE username=’admin’ # AND password=’ ‘). By using line commenting, the aggressor eliminates a part of the login condition and gains access. This technique will make the “WHERE” clause true only for one user; in this case, it is “ganesh.”
-=================================================================
+## Bypassing login field
+
+##### The username field is vulnerable. Put (ganesh’ #) or (ganesh’--) in the username field and hit “Enter” to log in. We use “#” or “--” to comment everything in the query sentence that comes after the username filed telling the database to disregard the password field: (SELECT * FROM users WHERE username=’admin’ # AND password=’ ‘). By using line commenting, the aggressor eliminates a part of the login condition and gains access. This technique will make the “WHERE” clause true only for one user; in this case, it is “ganesh.”
+##### =================================================================
 If you face error in registration follow the following steps in metasploitable 2:
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/e8418dcd-6633-4560-a5fb-2d0dd3a8aa9e)
 
 
 This issue is caused by a misconfiguration in the config.inc located in the /var/www/mutillidae folder on Metasploitable 2 VM.
@@ -67,31 +71,39 @@ This issue is caused by a misconfiguration in the config.inc located in the /var
 Edit config.inc
 Edit config.inc file located in /var/www/mutillidae folder on Metasploitable 2 by typing the following commands [one at the time]:
 cd /
-sudo nano /var/www/mutillidae/config.inc
+sudo vim /var/www/mutillidae/config.inc
 Type msfadmin when prompted for the root password. 
-Once nano opens config.inc file, look for the line $dbname = ‘metasploit’ as shown in Figure  below:
+Once vim opens config.inc file, look for the line $dbname = ‘metasploit’ as shown in Figure  below:
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/aeef9b41-9e65-40cc-afaf-c5242798e29f)
 
 
 Replace ‘metasploit’ with ‘owasp10’ and make sure the lines end with semicolon ; as shown in Figure
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/83db31be-7d7e-4487-82d7-a90331dacb30)
 
 
 Save and exit the config.inc
-Save than exit the config.inc file by typing CTRL+X keys on your keyboard and the Y [Enter] when prompted to save the file
+Save than exit the config.inc file by typing :wq keys on your keyboard to save the file
 Restart the Apache server
 To restart Apache, type the following command in the terminal. Alternatively, you can just reboot Metasploitalbe 2 VM.
 sudo /etc/init.d/apache2 reload
 
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/0d0fdf23-9e58-4150-b097-a509fe5ce9e1)
+
 
  Reset Mutillidae database
 Refresh the page then clicking on the Reset DB menu option to reset the Mutillidae database [Figure ]. Click OK when prompted.
+
+![image](https://github.com/CodesWithRobi/EH-LAB08-SQL-Injection/assets/130537166/bb1b1d76-ba3e-48e6-b077-5e1f413973e9)
 
 
 Test the new configuration
 Alright. Now is time to test if we managed to fix the database issue. Go ahead and register a new account on the Mutillidae webpage.
 
  The Mutillidae database error no longer appears 
+
+![Uploading image.png…]()
 
 ===============================================================
 
